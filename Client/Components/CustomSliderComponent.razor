@@ -1,29 +1,45 @@
 ﻿<style>
-    .cards-wrapper {
-        display: flex;
-    }
 
     .card {
-        margin: 0 10px;
+        margin: 0 .5em;
         width: calc(100%/@(CardItemCount));
     }
 
-    .images-wrapper {
-        height: 22vw;
-        dispaly: flex;
-        justify-content: center;
-        align-items: center;
+
+    .images-wrapper img {
+        max-height: 100%;
+        width: 100%;
+        object-fit: contain;
     }
 
-        .images-wrapper img {
-            max-height: 100%;
-            width: 100%;
+    @@media (min-width: 568px) {
+        .cards-wrapper {
+            display: flex;
         }
+
+        .card {
+            margin: 0 .5em;
+            width: calc(100%/@(CardItemCount));
+        }
+
+        .images-wrapper {
+            height: 22vw;
+            margin: 0 auto;
+        }
+    }
+
+    @@media (max-width: 567px) {
+        .card {
+            margin: 0 .5em;
+            width: calc(100%/1);
+        }
+    }
 </style>
 
 
 <div class="my-5">
-    <div id="carouselExample" class="carousel carousel-dark slide">
+    <!-- Slider - Web -->
+    <div id="carouselExample" class="carousel carousel-dark slide d-sm-block d-none">
         <div class="carousel-inner">
 
             @for(int i = 0; i <= 3; i++)
@@ -35,7 +51,7 @@
                                 <img src="https://dummyimage.com/500x500/ccc/ccc" alt="img">
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
+                                <h5 class="card-title">Card title 1</h5>
                                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                 <a href="#" class="btn btn-primary">Go somewhere</a>
                             </div>
@@ -43,10 +59,10 @@
 
                         <div class="card">
                             <div class="images-wrapper">
-                                <img src="https://dummyimage.com/500x450/ccc/ccc" alt="img">
+                                <img src="https://dummyimage.com/500x500/ccc/ccc" alt="img">
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
+                                <h5 class="card-title">Card title 2</h5>
                                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                 <a href="#" class="btn btn-primary">Go somewhere</a>
                             </div>
@@ -54,19 +70,17 @@
 
                         <div class="card">
                             <div class="images-wrapper">
-                                <img src="https://dummyimage.com/500x400/ccc/ccc" alt="img">
+                                <img src="https://dummyimage.com/500x500/ccc/ccc" alt="img">
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
+                                <h5 class="card-title">Card title 3</h5>
                                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                 <a href="#" class="btn btn-primary">Go somewhere</a>
                             </div>
                         </div>
                     </div>
                 </div>
-
             }
-
 
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
@@ -74,6 +88,33 @@
             <span class="visually-hidden">Previous</span>
         </button>
         <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <div id="carouselExampleMobile" class="carousel carousel-dark slide mt-5 d-sm-none">
+        <div class="carousel-inner">
+
+            @for(int i = 0; i < 3; i++)
+            {
+                <div class="carousel-item @(i == 1 ? "active" : "")">
+                    <div class="card">
+                        <img src="https://dummyimage.com/200x200/ccc/ccc" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleMobile" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleMobile" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
         </button>
