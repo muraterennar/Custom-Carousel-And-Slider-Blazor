@@ -1,0 +1,18 @@
+﻿@page "/carousel"
+@inject HttpClient _http
+
+<h3>Carousel</h3>
+
+<CustomCarouselComponent Images="Images" Duration="2000" IsCustomCss="true" Max_Height="100" Min_Height="530" Width="100"></CustomCarouselComponent>
+
+@code {
+    public List<SliderResim> Images { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Sonuc<List<SliderResim>> sonuc = await _http.GetFromJsonAsync<Sonuc<List<SliderResim>>>("api/Slider");
+
+        Images = sonuc.data;
+
+    }
+}

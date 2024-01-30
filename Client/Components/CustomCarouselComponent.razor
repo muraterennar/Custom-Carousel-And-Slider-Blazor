@@ -1,0 +1,111 @@
+﻿@inject IJSRuntime JS
+@inject HttpClient _http
+
+
+@if(IsCustomCss)
+{
+    <style>
+        .carousel {
+            min-height: @(Min_Height)px;
+            max-height: @(Max_Height)%;
+            width: @(Width)%;
+            background-color: lightgray;
+        }
+    </style>
+}
+
+
+
+
+@if(Images == null)
+{
+    <div class="mb-5 mt-3 ">
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+
+                <div class="carousel-item active">
+                    <img src="https://placehold.co/1000x500/gray/gray" class="d-block w-100 img-fluid image-card" alt="img">
+                </div>
+
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+}
+else
+{
+    <div class="mb-5 mt-3">
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+
+            <div class="carousel-indicators">
+                @for(var i = 0; i < Images.Count; i++)
+                {
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="@i" class="@((i == activeIndex) ? "active" : "")" aria-current="@((i == activeIndex) ? "true" : "false")" aria-label="Slide @(i+1)"></button>
+                }
+            </div>
+
+
+            <div class="carousel-inner">
+                @foreach(var image in Images)
+                {
+                    <div class="carousel-item @(activeIndex == Images.IndexOf(image) ? "active" : "")">
+                        <img src="@image.sliderResim" class="d-block w-100" alt="img">
+                    </div>
+                }
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+}
+
+
+
+@code {
+    [Parameter]
+    public List<SliderResim> Images { get; set; } // Dışarıda alacağım Resim Listesi
+
+    [Parameter]
+    public int Duration { get; set; } = 1000; // Dışarıda alacağım Atomatik oynatma süresi
+
+    [Parameter]
+    public int Min_Height { get; set; } // Dışarıda alacağım Carousel min-yüksekliği
+
+    [Parameter]
+    public int Max_Height { get; set; } // Dışarıda alacağım Carousel max-yüksekliği
+
+    [Parameter]
+    public int Width { get; set; } = 100; // Dışarıda alacağım Carousel genişliği
+
+    [Parameter]
+    public bool IsCustomCss { get; set; }
+
+    int activeIndex = 0; // Başlangıçta aktif olan index
+
+    // İlk render işleminden sonra çalışacak
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(!firstRender)
+            await JS.InvokeVoidAsync("CarasoulAutoplay", Duration);
+    }
+
+    // Carousel ilin anmiasyon süresini alaylayan JS kodu ile bağlantı fonksiyonu
+    private async Task CarouselDuration()
+    {
+        // await JS.InvokeVoidAsync("alert", "Hello World");
+        await JS.InvokeVoidAsync("CarasoulAutoplay", Duration);
+    }
+}
