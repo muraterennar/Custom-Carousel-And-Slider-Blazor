@@ -1,7 +1,16 @@
 ﻿@page "/slider"
+@inject HttpClient _http
 
-<CustomSliderComponent></CustomSliderComponent>
+<CustomSliderComponent Stoklar="Stoklar" ></CustomSliderComponent>
 
 @code {
 
+    public List<StokListesiBilgileri> Stoklar { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Sonuc<List<StokListesiBilgileri>> sonuc = await _http.GetFromJsonAsync<Sonuc<List<StokListesiBilgileri>>>("api/Stok");
+
+        Stoklar = sonuc.data;
+    }
 }
