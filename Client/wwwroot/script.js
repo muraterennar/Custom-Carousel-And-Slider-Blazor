@@ -11,8 +11,29 @@
     console.log(duration);
 }
 
-function clickButton() {
-    const btn = document.querySelector('#btn');
+function updateResize() {
+    var heidht = window.innerHeight;
+    var width = window.innerWidth;
+    console.log(heidht);
+    console.log(width);
 
-    console.log(btn);
+    return {
+        width: heidht,
+        height: width
+    };
 }
+
+function GetResize() {
+
+    window.addEventListener("resize", updateResize);
+}
+
+window.BlazorWindowSize = {
+    getWindowSize: function () {
+        return {
+            width: window.innerWidth,
+            height: window.innerHeight
+        };
+    }
+};
+
